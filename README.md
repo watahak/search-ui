@@ -1,40 +1,32 @@
-# Welcome to Remix!
+# Search UI
 
-- 📖 [Remix docs](https://remix.run/docs)
+## Setup Instructions
 
-## Development
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/watahak/search-ui
+    ```
 
-Run the dev server:
+2. Navigate to the project directory:
+    ```bash
+    cd search-ui
+    ```
 
-```shellscript
-npm run dev
-```
+3. Install dependencies:
+    ```bash
+    npm install
+    ```
 
-## Deployment
+4. Run the application:
+    ```bash
+    npm run dev
+    ```
 
-First, build your app for production:
+5. Open the application in your browser at `http://localhost:5173/`.
 
-```sh
-npm run build
-```
+## Running Tests
 
-Then run the app in production mode:
-
-```sh
-npm start
-```
-
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-- `build/server`
-- `build/client`
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
+1. Run the tests:
+    ```bash
+    npm run test
+    ```
