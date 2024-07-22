@@ -21,7 +21,6 @@ export default function Index() {
 
   const handleSearch = (query: string) => {
     setQuery(query);
-    // refetchResults();
   };
 
   return (
@@ -43,7 +42,7 @@ export default function Index() {
             />
           </svg>
         </div>
-        <a href={"google.com"} className="text-xs text-[#5B5B5B]  hover:underline">
+        <a href={"https://github.com/watahak/search-ui"} className="text-xs text-[#5B5B5B]  hover:underline">
           Check out Ping&apos;s source code here
         </a>
       </div>
