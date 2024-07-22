@@ -6,8 +6,8 @@ import { useGetResultsQuery } from "~/hooks/search.query";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "GovSearch" },
-    { name: "GovSearch", content: "Search Assignment" },
+    { title: "Search UI" },
+    { name: "Search UI", content: "Search Assignment" },
   ];
 };
 
@@ -52,7 +52,7 @@ export default function Index() {
 
       {!isLoading && results && (
         <div className="px-40 pb-40">
-          <div className="h-[116px] w-full text-xl font-semibold flex flex-col justify-center">
+          <div className="h-[116px] w-full text-xl flex flex-col justify-center">
             <span>
               Showing {(results.Page - 1) * results.PageSize + 1}-
               {results.Page * results.PageSize} of{" "}

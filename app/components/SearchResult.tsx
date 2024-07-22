@@ -10,7 +10,7 @@ const SearchResult = ({ title, date, excerpt, source }: SearchResultProps) => {
     <div className="py-4">
       <a
         href={source}
-        className="text-[#1C76D5] text-xl font-semibold hover:underline"
+        className="text-[#1C76D5] text-xl hover:underline"
         dangerouslySetInnerHTML={{ __html: title }}
       ></a>
       <div className="text-gray-500 text-sm mt-1">{date}</div>
