@@ -14,10 +14,7 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   const [query, setQuery] = useState<string | null>(null);
 
-  const {
-    data: results,
-    isLoading,
-  } = useGetResultsQuery(query);
+  const { data: results, isLoading } = useGetResultsQuery(query);
 
   const handleSearch = (query: string) => {
     setQuery(query);
@@ -25,7 +22,7 @@ export default function Index() {
 
   return (
     <div>
-      <div className="h-[24px] flex bg-[#F0F0F0]  flex-row p-1 pl-40 gap-3">
+      <div className="h-[24px] flex bg-[#F0F0F0]  flex-row p-1 pl-2 lg:pl-40  gap-3">
         <div className="">
           <svg
             height="16"
@@ -42,16 +39,19 @@ export default function Index() {
             />
           </svg>
         </div>
-        <a href={"https://github.com/watahak/search-ui"} className="text-xs text-[#5B5B5B]  hover:underline">
+        <a
+          href={"https://github.com/watahak/search-ui"}
+          className="text-xs text-[#5B5B5B]  hover:underline"
+        >
           Check out Ping&apos;s source code here
         </a>
       </div>
-      <div className="px-40 h-[152px] w-full shadow-[rgba(0,0,0,0.05)_10px_5px_4px_0px] flex">
+      <div className="lg:px-40 px-2 h-[152px] w-full shadow-[rgba(0,0,0,0.05)_10px_5px_4px_0px] flex">
         <SearchBar onSubmit={handleSearch} />
       </div>
 
       {!isLoading && results && (
-        <div className="px-40 pb-40">
+        <div className="lg:px-40 px-2 pb-40">
           <div className="h-[116px] w-full text-xl flex flex-col justify-center">
             <span>
               Showing {(results.Page - 1) * results.PageSize + 1}-
