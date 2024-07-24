@@ -1,5 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchBar from "~/components/SearchBar";
 import SearchResult from "~/components/SearchResult";
 import { useGetResultsQuery } from "~/hooks/search.query";
@@ -12,13 +12,17 @@ export const meta: MetaFunction = () => {
 };
 
 export default function Index() {
-  const [query, setQuery] = useState<string | null>(null);
+  const [query, setQuery] = useState<string>("");
 
-  const { data: results, isLoading } = useGetResultsQuery(query);
+  const { data: results, isLoading, refetch } = useGetResultsQuery(query);
 
   const handleSearch = (query: string) => {
     setQuery(query);
   };
+
+  useEffect(() => {
+    refetch();
+  }, [query, refetch]);
 
   return (
     <div>

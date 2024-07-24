@@ -21,3 +21,8 @@ export function highlightText(text: string, highlights: Highlight[]): string {
 
   return highlightedText;
 }
+
+export function highlightTextByQuery(text: string, query: string) {
+  const regex = new RegExp(`(${query})`, "gi");
+  return text.replace(regex, "<strong>$1</strong>");
+}

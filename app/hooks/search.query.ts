@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { QueryResponse, getResults, getSuggestions } from "~/api/search.api";
-import { highlightText } from "~/utility/helpers";
+import {  highlightTextByQuery } from "~/utility/helpers";
 
 export interface SearchResults extends Omit<QueryResponse, "ResultItems"> {
   results: {
@@ -16,32 +16,38 @@ export const useGetSuggestionsQuery = (suggestionQuery: string) => {
     queryKey: ["suggestions", suggestionQuery],
     queryFn: async () => {
       const response = await getSuggestions();
-      return response.data.suggestions.slice(0, 6);
+      return response.data.suggestions
+        .filter((s) => s.toLowerCase().includes(suggestionQuery.toLowerCase()))
+        .slice(0, 6)
+        .map((s) => {
+          return { text: highlightTextByQuery(s, suggestionQuery), value: s };
+        });
     },
-    enabled: suggestionQuery.length > 1,
+    enabled: suggestionQuery.length > 2,
   });
 
   return query;
 };
 
-export const useGetResultsQuery = (resultsQuery: string | null) => {
+export const useGetResultsQuery = (resultsQuery: string) => {
   const query = useQuery({
-    queryKey: ["results"],
+    queryKey: ["results", resultsQuery],
     queryFn: async (): Promise<SearchResults> => {
       const response = await getResults();
 
       const { ResultItems, ...others } = response.data;
 
-      const results = ResultItems.map((result) => {
+      const results = ResultItems.filter((s) =>
+        s.DocumentExcerpt.Text.toLowerCase().includes(
+          resultsQuery.toLowerCase()
+        )
+      ).map((result) => {
         return {
-          title: highlightText(
-            result.DocumentTitle.Text,
-            result.DocumentTitle.Highlights
-          ),
+          title: highlightTextByQuery(result.DocumentTitle.Text, resultsQuery),
           date: null,
-          excerpt: highlightText(
+          excerpt: highlightTextByQuery(
             result.DocumentExcerpt.Text,
-            result.DocumentExcerpt.Highlights
+            resultsQuery
           ),
           source: result.DocumentURI,
         };

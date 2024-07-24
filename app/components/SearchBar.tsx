@@ -40,7 +40,7 @@ const SearchBar = ({ onSubmit }: { onSubmit: (query: string) => void }) => {
       selectedSuggestionIndex >= 0 &&
       selectedSuggestionIndex < suggestions.length
     ) {
-      setQuery(suggestions[selectedSuggestionIndex]);
+      setQuery(suggestions[selectedSuggestionIndex].value);
     }
   }, [selectedSuggestionIndex, suggestions]);
 
@@ -105,7 +105,7 @@ const SearchBar = ({ onSubmit }: { onSubmit: (query: string) => void }) => {
           Search
         </button>
       </div>
-      {inputInFocus && !isLoading && suggestions && (
+      {inputInFocus && !isLoading && !!suggestions?.length && (
         <ul className="absolute left-0 right-0 bg-white border border-gray-300 mt-2 rounded-lg shadow-lg max-h-60 overflow-auto z-10">
           {suggestions.map((suggestion, index) => (
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
@@ -117,12 +117,11 @@ const SearchBar = ({ onSubmit }: { onSubmit: (query: string) => void }) => {
                   : "hover:bg-gray-100"
               }`}
               onClick={() => {
-                setQuery(suggestion);
+                setQuery(suggestion.value);
                 setSearchCallBackCount(searchCallBackCount + 1);
               }}
-            >
-              {suggestion}
-            </li>
+              dangerouslySetInnerHTML={{ __html: suggestion.text }}
+            />
           ))}
         </ul>
       )}
