@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { QueryResponse, getResults, getSuggestions } from "~/api/search.api";
-import {  highlightTextByQuery } from "~/utility/helpers";
+import { highlightTextByQuery } from "~/utility/helpers";
 
 export interface SearchResults extends Omit<QueryResponse, "ResultItems"> {
   results: {
@@ -12,6 +12,8 @@ export interface SearchResults extends Omit<QueryResponse, "ResultItems"> {
 }
 
 export const useGetSuggestionsQuery = (suggestionQuery: string) => {
+  suggestionQuery = suggestionQuery.trim();
+
   const query = useQuery({
     queryKey: ["suggestions", suggestionQuery],
     queryFn: async () => {
@@ -30,6 +32,8 @@ export const useGetSuggestionsQuery = (suggestionQuery: string) => {
 };
 
 export const useGetResultsQuery = (resultsQuery: string) => {
+  resultsQuery = resultsQuery.trim();
+
   const query = useQuery({
     queryKey: ["results", resultsQuery],
     queryFn: async (): Promise<SearchResults> => {
@@ -58,7 +62,7 @@ export const useGetResultsQuery = (resultsQuery: string) => {
         results,
       };
     },
-    enabled: !!resultsQuery,
+    enabled: !!resultsQuery.length,
   });
 
   return query;

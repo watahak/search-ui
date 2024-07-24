@@ -23,6 +23,8 @@ const SearchBar = ({ onSubmit }: { onSubmit: (query: string) => void }) => {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    setInputInFocus(true);
+
     if (event.key === "Enter") {
       handleSearch();
     } else if (event.key === "ArrowDown") {
@@ -65,7 +67,10 @@ const SearchBar = ({ onSubmit }: { onSubmit: (query: string) => void }) => {
         {query && (
           <button
             className="absolute right-[114px] top-1/2 transform -translate-y-1/2 text-gray-500"
-            onClick={() => setQuery("")}
+            onClick={() => {
+              setQuery("");
+              setSuggestionQuery("");
+            }}
           >
             <svg
               className="h-5 w-5"

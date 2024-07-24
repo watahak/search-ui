@@ -1,5 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SearchBar from "~/components/SearchBar";
 import SearchResult from "~/components/SearchResult";
 import { useGetResultsQuery } from "~/hooks/search.query";
@@ -14,15 +14,11 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   const [query, setQuery] = useState<string>("");
 
-  const { data: results, isLoading, refetch } = useGetResultsQuery(query);
+  const { data: queryResponse, isLoading } = useGetResultsQuery(query);
 
   const handleSearch = (query: string) => {
     setQuery(query);
   };
-
-  useEffect(() => {
-    refetch();
-  }, [query, refetch]);
 
   return (
     <div>
@@ -54,17 +50,25 @@ export default function Index() {
         <SearchBar onSubmit={handleSearch} />
       </div>
 
-      {!isLoading && results && (
+      {!isLoading && queryResponse?.results.length === 0 && (
+        <div className="lg:px-40 px-2 pb-40">
+          <div className="h-[116px] w-full text-xl flex flex-col justify-center">
+            No results found
+          </div>
+        </div>
+      )}
+
+      {!isLoading && !!queryResponse?.results.length && (
         <div className="lg:px-40 px-2 pb-40">
           <div className="h-[116px] w-full text-xl flex flex-col justify-center">
             <span>
-              Showing {(results.Page - 1) * results.PageSize + 1}-
-              {results.Page * results.PageSize} of{" "}
-              {results.TotalNumberOfResults} results
+              Showing {(queryResponse.Page - 1) * queryResponse.PageSize + 1}-
+              {queryResponse.Page * queryResponse.PageSize} of{" "}
+              {queryResponse.TotalNumberOfResults} results
             </span>
           </div>
 
-          {results.results.map((result, index) => (
+          {queryResponse.results.map((result, index) => (
             <SearchResult key={index} {...result} />
           ))}
         </div>
